@@ -1,0 +1,65 @@
+[
+    {
+        "created_at": "Wed Jun 20 15:07:36 +0000 2012",
+        "description": "Quoting America's Pastime in 280 characters or less.",
+        "entities": {
+            "description": {
+                "urls": []
+            }
+        },
+        "id": "u613512037",
+        "location": "The Diamond",
+        "name": "Baseball Quotes",
+        "pinned_tweet_id": "None",
+        "profile_image_url": "http://pbs.twimg.com/profile_images/559155402693423105/J1HBp3ht_normal.jpeg",
+        "protected": "False",
+        "public_metrics": {
+            "followers_count": 121500,
+            "following_count": 346,
+            "tweet_count": 21246,
+            "listed_count": 532
+        },
+        "url": "None",
+        "username": "BaseballQuotes1",
+        "verified": "False",
+        "withheld": "None"
+    },
+    {
+        "created_at": "Tue Jan 20 23:15:20 +0000 2009",
+        "description": "Official Twitter of the 2016 NBA Champion Cleveland Cavaliers. @NBAGLeague Affiliate @CantonCharge. #BeTheFight",
+        "entities": {
+            "url": {
+                "urls": [
+                    {
+                        "url": "https://t.co/XDJzEZarB0",
+                        "expanded_url": "http://www.cavs.com",
+                        "display_url": "cavs.com",
+                        "indices": [
+                            0,
+                            23
+                        ]
+                    }
+                ]
+            },
+            "description": {
+                "urls": []
+            }
+        },
+        "id": "u19263978",
+        "location": "The Q | Cleveland, OH",
+        "name": "Cleveland Cavaliers",
+        "pinned_tweet_id": null,
+        "profile_image_url": "http://pbs.twimg.com/profile_images/1079823292922499072/-ENgSshG_normal.jpg",
+        "protected": false,
+        "public_metrics": {
+            "followers_count": 3227215,
+            "following_count": 1946,
+            "tweet_count": 45791,
+            "listed_count": 9039
+        },
+        "url": "https://t.co/XDJzEZarB0",
+        "username": "cavs",
+        "verified": true,
+        "withheld": null
+    }
+]
