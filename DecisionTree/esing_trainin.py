@@ -75,24 +75,23 @@ pred_model = model.predict(x_test)
 # TODO : 自动将结果数据进行处理并输出到txt文档内
 
 
-output = [accuracy_score(y_test, pred_model),
-          f1_score(y_test, pred_model),
-          precision_score(y_test, pred_model),
-          recall_score(y_test, pred_model),
-          roc_auc_score(y_test, pred_model),
-          cohen_kappa_score(y_test, pred_model)]
+# output = [accuracy_score(y_test, pred_model),
+#           f1_score(y_test, pred_model),
+#           precision_score(y_test, pred_model),
+#           recall_score(y_test, pred_model),
+#           roc_auc_score(y_test, pred_model),
+#           cohen_kappa_score(y_test, pred_model)]
 
-'''
+
 print(cl('Accuracy of the model is {:.2%}'.format((accuracy_score(y_test, pred_model))), attrs=['bold']))
 print(cl('F1-Score of the model is {:.2%}'.format(f1_score(y_test, pred_model)), attrs=['bold']))
 print(cl('PrecisionScore of the model is {:.2%}'.format(precision_score(y_test, pred_model)), attrs=['bold']))
 print(cl('RecallScore of the model is {:.2%}'.format(recall_score(y_test, pred_model)), attrs=['bold']))
 print(cl('ROC_AUC_SCORE of the model is {:.2%}'.format(roc_auc_score(y_test, pred_model)), attrs=['bold']))
 print(cl('CohenKappaScore of the model is {:.2%}'.format(cohen_kappa_score(y_test, pred_model)), attrs=['bold']))
-'''
 
-for i in output:
-    print(f"{i:.3%}")
+# for i in output:
+#     print(f"{i:.3%}")
 
 # pred_model = model.predict(x_learn)
 # print(cl(f'Accuracy of the model is {(accuracy_score(y_learn, pred_model))}', attrs=['bold']))
