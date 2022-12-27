@@ -61,12 +61,20 @@ y_test = test_input['label'].values
 # print(cl(f'X变量举例：{x_learn[:5]}'))
 # print(cl(f'Y变量举例：{y_learn[:5]}'))
 
+all_output = []
 
 for i in range(2, 10):
     model = dtc(criterion='entropy', max_depth=i)
     model.fit(x_learn, y_learn)
 
     pred_model = model.predict(x_test)
+
+    output = [accuracy_score(y_test, pred_model),
+              f1_score(y_test, pred_model),
+              precision_score(y_test, pred_model),
+              recall_score(y_test, pred_model),
+              roc_auc_score(y_test, pred_model),
+              cohen_kappa_score(y_test, pred_model)]
 
     # TODO : 对于test.csv，用不同样本数量/不同测试集进行验证
 
@@ -93,5 +101,21 @@ for i in range(2, 10):
               rounded=True,
               fontsize=3)
 
-    plt.rcParams["font.family"] = 'WenQuanYi Micro Hei'
-    plt.savefig('tree_visualization.png', dpi=500)
+    all_output.append(output)
+
+    # plt.rcParams["font.family"] = 'WenQuanYi Micro Hei'
+    # plt.savefig('tree_visualization.png', dpi=500)
+
+depth_change = pd.DataFrame.from_records(
+    all_output,
+    columns=[
+        'accuracy_score',
+        'f1_score',
+        'precision_score',
+        'recall_score',
+        'roc_auc_score',
+        'cohen_kappa_score'
+    ]
+)
+
+depth_change.to_csv('depth_change.csv', index=False)
