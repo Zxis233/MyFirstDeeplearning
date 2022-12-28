@@ -4,5 +4,5 @@ nltk_data/
 test.py
 check.py
 *.csv
-*/*.csv
-*/*.png
+*.json
+*.png
