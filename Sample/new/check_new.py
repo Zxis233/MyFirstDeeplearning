@@ -28,21 +28,25 @@ def get_url(url: str) -> bool:
         return True
 
 
-# origin_data = json.load(open("test.json"))
-origin_data = json.load(open("node.json"))
+# name = "botometer-feedback-2019_tweets"
+name = "gilani-2017_tweets"
+
+origin_data = json.load(open(name + ".json"))
 
 records = [
     (
-        i['public_metrics']['followers_count'],
-        i['public_metrics']['following_count'],
-        i['public_metrics']['tweet_count'],
-        i['public_metrics']['listed_count'],
+        i['user']['id'],
+        i['user']['followers_count'],
+        i['user']['friends_count'],
+        i['user']['statuses_count'],
+        i['user']['listed_count'],
+
         get_time_to_now(i['created_at']),
-        get_url(i['profile_image_url']),
-        i['protected'],
-        i['verified'],
-        len(i['name']),
-        len(i['username'])
+        get_url(i['user']['profile_image_url_https']),
+        i['user']['protected'],
+        i['user']['verified'],
+        len(i['user']['name']),
+        len(i['user']['screen_name'])
     )
     for i in origin_data
 ]
@@ -50,6 +54,7 @@ records = [
 out = pd.DataFrame.from_records(
     records,
     columns=[
+        'id',
         'followers_count',
         'following_count',
         'tweet_count',
@@ -64,5 +69,5 @@ out = pd.DataFrame.from_records(
 
 )
 
-# out.to_csv('test.csv')
-out.to_csv('out.csv')
+out = out.drop_duplicates(subset=['id'])
+out.to_csv(name + '.csv', index=False)
