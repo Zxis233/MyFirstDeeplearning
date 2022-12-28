@@ -12,10 +12,10 @@ from termcolor import colored as cl  # 文本自定义
 # name = "botometer-feedback-2019"
 name = "gilani-2017"
 
-learn_input = pd.read_csv('../merged' + name + '_merge.csv')
+learn_input = pd.read_csv('../merged/' + name + '_merge.csv')
 learn_input.drop(columns=['protected'], axis=1, inplace=True)
 
-test_input = pd.read_csv('../' + 'test.csv')
+test_input = pd.read_csv('../dataset/' + 'test.csv')
 test_input.drop(columns=['id', 'spilt', 'protected'], axis=1, inplace=True)
 
 # 将标签改为0/1
