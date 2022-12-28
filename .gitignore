@@ -1,8 +1,8 @@
 .idea/
 label/
 nltk_data/
-test.py
-check.py
 *.csv
 *.json
 *.png
+/test.py
+/check.py
