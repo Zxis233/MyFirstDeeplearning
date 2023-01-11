@@ -60,8 +60,8 @@ def calculate_score(df1, df2):
 # name = "botometer-feedback-2019"
 name = "gilani-2017"
 
-df1 = pd.read_csv(name + "_merge.csv")
-df2 = pd.read_csv("test.csv")
+df1 = pd.read_csv("../merged/" + name + "_merge.csv")
+df2 = pd.read_csv("../dataset/test.csv")
 
 # 存数据
 records = []

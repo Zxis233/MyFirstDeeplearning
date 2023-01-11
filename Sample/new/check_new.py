@@ -31,7 +31,7 @@ def get_url(url: str) -> bool:
 # name = "botometer-feedback-2019_tweets"
 name = "gilani-2017_tweets"
 
-origin_data = json.load(open(name + ".json"))
+origin_data = json.load(open("dataset/" + name + ".json"))
 
 records = [
     (
@@ -45,8 +45,9 @@ records = [
         get_url(i['user']['profile_image_url_https']),
         i['user']['protected'],
         i['user']['verified'],
-        len(i['user']['name']),
-        len(i['user']['screen_name'])
+        # len(i['user']['name']),
+        len(i['user']['screen_name']),
+        len(i['user']['description'])
     )
     for i in origin_data
 ]
@@ -63,11 +64,12 @@ out = pd.DataFrame.from_records(
         'has_profile_photo',
         'protected',
         'verified',
-        'nickname_length',
-        'screenname_length'
+        # 'nickname_length',
+        'screenname_length',
+        'description'
     ]
 
 )
 
 out = out.drop_duplicates(subset=['id'])
-out.to_csv(name + '.csv', index=False)
+out.to_csv('dataset/' + name + '.csv', index=False)

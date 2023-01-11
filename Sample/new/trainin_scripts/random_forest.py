@@ -54,7 +54,7 @@ x_test = test_input[
 
 y_test = test_input["label"].values
 
-random_forest = RandomForestClassifier(class_weight='balanced', n_estimators=500, random_state=15)
+random_forest = RandomForestClassifier(class_weight='balanced', n_estimators=500, random_state=6)
 random_forest.fit(x_train, y_train)
 y_pred = random_forest.predict(x_test)
 y_ture = y_test

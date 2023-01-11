@@ -29,11 +29,11 @@ for j in test.label.values:
     elif j == 'human':
         test.label.replace(j, 0, inplace=True)
 
-x_train = train.drop(["type"], axis=1)
-y_train = train["type"]
+x_train = train.drop(["type"], axis=1).values
+y_train = train["type"].values
 
-x_test = test.drop(["label"], axis=1)
-y_test = test["label"]
+x_test = test.drop(["label"], axis=1).values
+y_test = test["label"].values
 
 nb = MultinomialNB()
 nb.fit(x_train, y_train)
