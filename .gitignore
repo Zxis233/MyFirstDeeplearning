@@ -9,3 +9,7 @@ nltk_data/
 
 /test.py
 /check.py
+
+*.env
+
+*/__pycache__
