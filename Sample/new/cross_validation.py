@@ -9,19 +9,20 @@ from sklearn import linear_model
 
 # print(get_scorer_names())
 
-scoring = 'roc_auc'
-print(scoring)
 
 name = "botometer-feedback-2019"
 # name = "gilani-2017"
 
 # 提取数据
-df = pd.read_csv("merged/" + name + '_final.csv')
-
+# df = pd.read_csv("merged/" + name + '_final.csv')
+df = pd.read_csv("../../Fulltrain/out.csv")
 # 分离内容与标签
-label = df["type"].values
-data = df.drop(columns=["type"], axis=1, inplace=False).values
 
+
+label = df["is_human"].values
+data = df.drop(columns=["is_human"], axis=1, inplace=False).values
+# label = df["type"].values
+# data = df.drop(columns=["type"], axis=1, inplace=False).values
 # 各种模型
 
 '''
@@ -52,9 +53,9 @@ clf.fit(X=data, y=label)
 # svmscores = cross_val_score(clf, X=data, y=label, cv=10, scoring=scoring)
 # print("支持向量机:\n", svmscores)
 '''
+
+
 # 分离内容与标签
-label = df["type"].values
-data = df.drop(columns=["type"], axis=1, inplace=False).values
 
 
 # 求均值

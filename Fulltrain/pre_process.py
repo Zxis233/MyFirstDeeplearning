@@ -1,6 +1,9 @@
 import pandas as pd
 from datetime import datetime
 
+from entropy import calEntropy
+from true_or_false import judge_tof
+
 
 # from check import get_time_to_now, get_url
 
@@ -38,7 +41,6 @@ all_csv = all_csv.drop(
     [
         "id",
         "time_zone",
-        "location",
         "profile_image_url",
         "profile_background_image_url_https",
         "profile_text_color",
@@ -47,7 +49,6 @@ all_csv = all_csv.drop(
         "profile_background_color",
         "profile_link_color",
         "utc_offset",
-        "updated",
         "profile_background_image_url",
         "lang",
         # "description",
@@ -69,6 +70,7 @@ all_csv.loc[all_csv['is_human'] == 'TFP', 'is_human'] = '1'
 # all_csv.loc[all_csv['verified'] != , 'verified'] = '1'
 
 # all_csv = all_csv.dropna(axis=0, subset=['is_human'], how='any')
+all_csv = all_csv.dropna(axis=0, subset=['screen_name'], how='any')
 # all_csv = all_csv.fillna({'verified': 0})
 all_csv.to_csv('all.csv', index=False)
 
@@ -77,7 +79,7 @@ all_csv.to_csv('all.csv', index=False)
 # 读取新生成的CSV文件，进行预处理
 
 train_csv = pd.read_csv('all.csv')
-
+'''
 records = [
     (
         getattr(row, 'followers_count'),
@@ -113,6 +115,61 @@ out = pd.DataFrame.from_records(
         'is_human'
     ]
 
+)
+
+out.to_csv('out.csv', index=False)
+'''
+
+# print(all_csv['location'].isnull())
+
+# for i in all_csv[:5].itertuples():
+#     print(getattr(i, 'default_profile'))
+#     print(str(getattr(i, 'default_profile')) == 'nan')
+
+records = [
+    (
+        # USER ATTRIBUTE
+        len(getattr(row, 'screen_name')),
+        1 if str(getattr(row, 'default_profile')) != 'nan' else 0,
+
+        calEntropy(str(getattr(row, 'screen_name'))),
+
+        1 if str(getattr(row, 'location')) == 'nan' else 0,
+
+        getattr(row, 'statuses_count'),
+
+        # NETWORK ATTRIBUTE
+        getattr(row, 'friends_count'),
+        getattr(row, 'followers_count'),
+
+        # CONTENT
+        getattr(row, 'is_human'),
+
+        # TIMING
+        get_time_to_now(getattr(row, 'created_at')),
+        float(getattr(row, 'statuses_count')) / float(get_time_to_now(getattr(row, 'created_at'))),
+    )
+    for row in all_csv.itertuples()
+]
+
+out = pd.DataFrame.from_records(
+    records,
+    columns=[
+        'screenname_length',
+        'default_profile',
+        'screenname_entropy',
+
+        'has_location',
+        'total_tweets',
+
+        'of_friends',
+        'of_followers',
+
+        'is_human',
+
+        'account_age',
+        'avg_tweets_per_day'
+    ]
 )
 
 out.to_csv('out.csv', index=False)
