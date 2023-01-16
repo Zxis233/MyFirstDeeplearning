@@ -1,8 +1,8 @@
+import sys
+sys.path.append("/home/zxis/MyFirstDeeplearning/")
 import pandas as pd
 from datetime import datetime
-
 from entropy import calEntropy
-from true_or_false import judge_tof
 
 
 # from check import get_time_to_now, get_url
@@ -29,17 +29,16 @@ def get_url(url: str) -> bool:
 # 剔除无用行，并且将数据集所对应的用户更改为是否为机器人(0/1)
 
 
-df_all = []
+""" df_all = []
 for i in range(1, 6):
-    df_all.append(pd.read_csv(f"csv/{i}.csv"))
+    df_all.append(pd.read_csv(f"csv/userinfo/{i}.csv"))
 # print(df_all[0])
 
 all_csv = pd.concat(df_all, ignore_index=True)
 
 all_csv = all_csv.drop(
-    axis=1, columns=
-    [
-        "id",
+    axis=1, columns=[
+        # "id",
         "time_zone",
         "profile_image_url",
         "profile_background_image_url_https",
@@ -72,13 +71,13 @@ all_csv.loc[all_csv['is_human'] == 'TFP', 'is_human'] = '1'
 # all_csv = all_csv.dropna(axis=0, subset=['is_human'], how='any')
 all_csv = all_csv.dropna(axis=0, subset=['screen_name'], how='any')
 # all_csv = all_csv.fillna({'verified': 0})
-all_csv.to_csv('all.csv', index=False)
+all_csv.to_csv('all.csv', index=False) """
 
 # STAGE TWO:
 #
 # 读取新生成的CSV文件，进行预处理
 
-train_csv = pd.read_csv('all.csv')
+train_csv = pd.read_csv('csv/tweets/merged.csv')
 '''
 records = [
     (
@@ -144,13 +143,17 @@ records = [
 
         # CONTENT
         getattr(row, 'is_human'),
+        getattr(row, 'num_hashtags'),
+        getattr(row, 'num_mentions'),
 
         # TIMING
         get_time_to_now(getattr(row, 'created_at')),
-        float(getattr(row, 'statuses_count')) / float(get_time_to_now(getattr(row, 'created_at'))),
+        float(getattr(row, 'statuses_count')) / \
+        float(get_time_to_now(getattr(row, 'created_at'))),
     )
-    for row in all_csv.itertuples()
+    for row in train_csv.itertuples()
 ]
+
 
 out = pd.DataFrame.from_records(
     records,
@@ -166,6 +169,8 @@ out = pd.DataFrame.from_records(
         'of_followers',
 
         'is_human',
+        'num_hashtags',
+        'num_mentions',
 
         'account_age',
         'avg_tweets_per_day'

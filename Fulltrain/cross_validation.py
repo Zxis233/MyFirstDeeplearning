@@ -1,5 +1,5 @@
 from sklearn.model_selection import cross_val_score
-from sklearn.metrics import get_scorer_names
+from sklearn.metrics import get_scorer
 from sklearn import svm
 import pandas as pd
 from sklearn.tree import DecisionTreeClassifier as dtc
@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import linear_model
 
-name = "../Sample/new/merged/gilani-2017_final.csv"
+name = "out.csv"
 
 # 提取数据
 df = pd.read_csv(name)
@@ -43,8 +43,8 @@ clf.fit(X=data, y=label)
 # print("支持向量机:\n", svmscores)
 '''
 # 分离内容与标签
-label = df["type"].values
-data = df.drop(columns=["type"], axis=1, inplace=False).values
+label = df["is_human"].values
+data = df.drop(columns=["is_human"], axis=1, inplace=False).values
 
 
 # 求均值
@@ -57,7 +57,7 @@ def average(input_data: list):
     return sums / lens
 
 
-# 各种模型
+""" # 各种模型
 # 支持向量机
 clf = svm.SVC(kernel='linear', C=1)
 svmscoresacc = cross_val_score(clf, X=data, y=label, cv=10, scoring='accuracy')
@@ -70,50 +70,70 @@ svmscoresf1 = cross_val_score(clf, X=data, y=label,  cv=10, scoring='f1')
 print("f1:", average(svmscoresf1))
 svmscoresra = cross_val_score(clf, X=data, y=label,  cv=10, scoring='roc_auc')
 print("roc:", average(svmscoresra))
-# print("支持向量机准确率")
-
+# print("支持向量机准确率") """
 
 
 # 决策树
 
-#
-# model = dtc(criterion='entropy', max_depth=6)
-# treescoresacc = cross_val_score(model, X=data, y=label, cv=10, scoring='accuracy')
-# treescorespre = cross_val_score(model, X=data, y=label, cv=10, scoring='precision')
-# treescoresrec = cross_val_score(model, X=data, y=label, cv=10, scoring='recall')
-# treescoresf1 = cross_val_score(model, X=data, y=label, cv=10, scoring='f1')
-# treescoresra = cross_val_score(model, X=data, y=label, cv=10, scoring='roc_auc')
-# print("决策树准确率")
-# print("accuracy:", average(treescoresacc)), print("precision:", average(treescorespre))
-# print("recall:", average(treescoresrec)), print("f1:", average(treescoresf1)), print("roc:", average(treescoresra))
-# # 朴素贝叶斯
-# nb = MultinomialNB()
-# nbscoresacc = cross_val_score(nb, X=data, y=label, cv=10, scoring='accuracy')
-# nbscorespre = cross_val_score(nb, X=data, y=label, cv=10, scoring='precision')
-# nbscoresrec = cross_val_score(nb, X=data, y=label, cv=10, scoring='recall')
-# nbscoresf1 = cross_val_score(nb, X=data, y=label, cv=10, scoring='f1')
-# nbscoresra = cross_val_score(nb, X=data, y=label, cv=10, scoring='roc_auc')
-# print("朴素贝叶斯准确率")
-# print("accuracy:", average(nbscoresacc)), print("precision:", average(nbscorespre))
-# print("recall:", average(nbscoresrec)), print("f1:", average(nbscoresf1)), print("roc:", average(nbscoresra))
-# # 逻辑回归
-# log_reg = linear_model.LogisticRegression(penalty="l2", C=1, solver="liblinear")
-# log_regscoresacc = cross_val_score(log_reg, X=data, y=label, cv=10, scoring='accuracy')
-# log_regscorespre = cross_val_score(log_reg, X=data, y=label, cv=10, scoring='precision')
-# log_regscoresrec = cross_val_score(log_reg, X=data, y=label, cv=10, scoring='recall')
-# log_regscoresf1 = cross_val_score(log_reg, X=data, y=label, cv=10, scoring='f1')
-# log_regscoresra = cross_val_score(log_reg, X=data, y=label, cv=10, scoring='roc_auc')
-# print("逻辑回归准确率")
-# print("accuracy:", average(log_regscoresacc)), print("precision:", average(log_regscorespre))
-# print("recall:", average(log_regscoresrec)), print("f1:", average(log_regscoresf1)), print("roc:",
-#                                                                                            average(log_regscoresra))
-# # 随机森林
-# random_forest = RandomForestClassifier(n_estimators=500, random_state=10)
-# rfscoresacc = cross_val_score(random_forest, X=data, y=label, cv=10, scoring='accuracy')
-# rfscorespre = cross_val_score(random_forest, X=data, y=label, cv=10, scoring='precision')
-# rfscoresrec = cross_val_score(random_forest, X=data, y=label, cv=10, scoring='recall')
-# rfscoresf1 = cross_val_score(random_forest, X=data, y=label, cv=10, scoring='f1')
-# rfscoresra = cross_val_score(random_forest, X=data, y=label, cv=10, scoring='roc_auc')
-# print("随机森林准确率")
-# print("accuracy:", average(rfscoresacc)), print("precision:", average(rfscorespre))
-# print("recall:", average(rfscoresrec)), print("f1：", average(rfscoresf1)), print("roc:", average(rfscoresra))
+model = dtc(criterion='entropy', max_depth=6)
+treescoresacc = cross_val_score(
+    model, X=data, y=label, cv=10, scoring='accuracy')
+treescorespre = cross_val_score(
+    model, X=data, y=label, cv=10, scoring='precision')
+treescoresrec = cross_val_score(
+    model, X=data, y=label, cv=10, scoring='recall')
+treescoresf1 = cross_val_score(model, X=data, y=label, cv=10, scoring='f1')
+treescoresra = cross_val_score(
+    model, X=data, y=label, cv=10, scoring='roc_auc')
+print("决策树准确率")
+print("accuracy:", average(treescoresacc)), print(
+    "precision:", average(treescorespre))
+print("recall:", average(treescoresrec)), print(
+    "f1:", average(treescoresf1)), print("roc:", average(treescoresra))
+# 朴素贝叶斯
+nb = MultinomialNB()
+nbscoresacc = cross_val_score(nb, X=data, y=label, cv=10, scoring='accuracy')
+nbscorespre = cross_val_score(nb, X=data, y=label, cv=10, scoring='precision')
+nbscoresrec = cross_val_score(nb, X=data, y=label, cv=10, scoring='recall')
+nbscoresf1 = cross_val_score(nb, X=data, y=label, cv=10, scoring='f1')
+nbscoresra = cross_val_score(nb, X=data, y=label, cv=10, scoring='roc_auc')
+print("朴素贝叶斯准确率")
+print("accuracy:", average(nbscoresacc)), print(
+    "precision:", average(nbscorespre))
+print("recall:", average(nbscoresrec)), print(
+    "f1:", average(nbscoresf1)), print("roc:", average(nbscoresra))
+# 逻辑回归
+log_reg = linear_model.LogisticRegression(
+    penalty="l2", C=1, solver="liblinear")
+log_regscoresacc = cross_val_score(
+    log_reg, X=data, y=label, cv=10, scoring='accuracy')
+log_regscorespre = cross_val_score(
+    log_reg, X=data, y=label, cv=10, scoring='precision')
+log_regscoresrec = cross_val_score(
+    log_reg, X=data, y=label, cv=10, scoring='recall')
+log_regscoresf1 = cross_val_score(
+    log_reg, X=data, y=label, cv=10, scoring='f1')
+log_regscoresra = cross_val_score(
+    log_reg, X=data, y=label, cv=10, scoring='roc_auc')
+print("逻辑回归准确率")
+print("accuracy:", average(log_regscoresacc)), print(
+    "precision:", average(log_regscorespre))
+print("recall:", average(log_regscoresrec)), print("f1:", average(log_regscoresf1)), print("roc:",
+                                                                                           average(log_regscoresra))
+# 随机森林
+random_forest = RandomForestClassifier(n_estimators=500, random_state=10)
+rfscoresacc = cross_val_score(
+    random_forest, X=data, y=label, cv=10, scoring='accuracy')
+rfscorespre = cross_val_score(
+    random_forest, X=data, y=label, cv=10, scoring='precision')
+rfscoresrec = cross_val_score(
+    random_forest, X=data, y=label, cv=10, scoring='recall')
+rfscoresf1 = cross_val_score(
+    random_forest, X=data, y=label, cv=10, scoring='f1')
+rfscoresra = cross_val_score(
+    random_forest, X=data, y=label, cv=10, scoring='roc_auc')
+print("随机森林准确率")
+print("accuracy:", average(rfscoresacc)), print(
+    "precision:", average(rfscorespre))
+print("recall:", average(rfscoresrec)), print(
+    "f1：", average(rfscoresf1)), print("roc:", average(rfscoresra))
